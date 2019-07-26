@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND='non-interactive'
-
 echo -e "slapd slapd/root_password password eric" |debconf-set-selections
 echo -e "slapd slapd/root_password_again password eric" |debconf-set-selections
 echo -e "slapd slapd/internal/adminpw password eric" |debconf-set-selections
@@ -17,9 +16,9 @@ echo -e "slapd slapd/allow_ldap_v2 boolean false" |debconf-set-selections
 echo -e "slapd slapd/no_configuration boolean false" |debconf-set-selections
 
 # Grab slapd and ldap-utils (pre-seeded)
-apt-get install -y slapd ldap-utils phpldapadmin
+#apt-get install -y slapd ldap-utils phpldapadmin
 
 # Must reconfigure slapd for it to work properly 
-sudo dpkg-reconfigure slapd 
-sudo ufw allow ldap
+#sudo dpkg-reconfigure slapd 
+#sudo ufw allow ldap
 
