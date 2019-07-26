@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt-get update
+#sudo apt-get install -y slapd ldap-utils
+
 export DEBIAN_FRONTEND='non-interactive'
 echo -e "slapd slapd/root_password password eric" |debconf-set-selections
 echo -e "slapd slapd/root_password_again password eric" |debconf-set-selections
