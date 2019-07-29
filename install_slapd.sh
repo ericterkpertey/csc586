@@ -20,5 +20,26 @@ echo -e "slapd slapd/no_configuration boolean false" |sudo debconf-set-selection
 # Grab slapd and ldap-utils (pre-seeded)
 sudo apt-get install -y slapd ldap-utils
  
-#sudo ufw allow ldap
+sudo ufw allow ldap
 
+ldapadd -x -D cn=admin,dc=clemson,dc=cloudlab,dc=us -w eric -f basedn.ldif
+
+cat<< EOF >/local/repository/users.ldif
+dn: uid=student,ou=People,dc=clemson,dc=cloudlab,dc=us
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: student
+sn: Ram
+givenName: Golden
+cn: student
+displayName: student
+uidNumber: 10000
+gidNumber: 5000
+userPassword: echo "$(slappasswd -s rammy)"
+gecos: Golden Ram
+loginShell: /bin/dash
+homeDirectory: /home/student
+EOF
+
+ldapadd -x -D cn=admin,dc=clemson,dc=cloudlab,dc=us -w eric -f users.ldif
