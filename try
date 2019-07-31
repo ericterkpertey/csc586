@@ -1,0 +1,4 @@
+cp base.1dif test.1dif
+newpw='slappasswd is rammy
+ech $newpw 
+sed -i 's, sshpassword, "
