@@ -4,7 +4,7 @@ ADMIN_PASSWORD="eric"
 #updates the system repo database
 sudo apt update
 
-#change the frontend to noninteractive, avoiding prompts for automation
+#this change the frontend to noninteractive, avoiding prompts for users
 export DEBIAN_FRONTEND=noninteractive
 echo "
 ldap_auth_config        ldap_auth_config/bindpw password eric
@@ -22,7 +22,7 @@ ldap_auth_config        ldap_auth_config/override       boolean true " | sudo de
 #installs libnss-ldap libpam-ldap ldap-utils along with all their dependencies
 sudo apt install -y -q libnss-ldap -y libpam-ldap ldap-utils
 
-#changes to ldap.conf, ldap.secret, nsswitch.conf, common-session, common-password
+#make changes to ldap.conf, ldap.secret, nsswitch.conf, common-session, common-password
 
 sudo sed -i 's/uri ldapi:\/\/\//uri ldap:\/\/192.168.1.1\//g' /etc/ldap.conf
 sudo sed -i 's/base dc=example,dc=net/base dc=clemson,dc=cloudlab,dc=us/g' /etc/ldap.conf
@@ -35,39 +35,3 @@ sudo bash <<EOF
 echo $ADMIN_PASSWORD > /etc/ldap.secret
 EOF
 sudo chmod 600 /etc/ldap.secret
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#ldap-auth-config        ldap-auth-config/bindpw password
-#ldap-auth-config        ldap-auth-config/rootbindpw     password
-#ldap-auth-config        ldap-auth-config/pam_password   select  md5
-#ldap-auth-config        ldap-auth-config/move-to-debconf        boolean true
-#ldap-auth-config        ldap-auth-config/binddn string  cn=proxyuser,dc=example,dc=net
-#ldap-auth-config        ldap-auth-config/dblogin        boolean false
-#ldap-auth-config        ldap-auth-config/override       boolean true
-#libpam-runtime  libpam-runtime/profiles multiselect     unix, ldap, systemd, capability
-#ldap-auth-config        ldap-auth-config/ldapns/ldap_version    select  3
-#ldap-auth-config        ldap-auth-config/dbrootlogin    boolean true
-#ldap-auth-config        ldap-auth-config/ldapns/ldap-server     string  ldap://192.168.1.1
-#ldap-auth-config        ldap-auth-config/ldapns/base-dn string  dc=clemson,dc=cloudlab, dc=us
-#ldap-auth-config        ldap-auth-config/rootbinddn     string  cn=admin,dc=clemson,dc=cloudlab, dc=us
